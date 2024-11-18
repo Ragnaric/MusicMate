@@ -36,4 +36,12 @@ class ScreenUtils {
   static double screenHeight(BuildContext context) {
     return MediaQuery.of(context).size.height;
   }
+
+  static void openDrawer(BuildContext context) {
+    Scaffold.of(context).openDrawer();
+  }
+
+  static void closeDrawer(BuildContext context) {
+    Navigator.pop(context);
+  }
 }

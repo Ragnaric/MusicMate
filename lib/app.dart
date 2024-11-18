@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:music_mate/common/common.dart';
 
 class MusicMate extends StatelessWidget {
   const MusicMate({super.key});
@@ -11,55 +12,20 @@ class MusicMate extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.greenAccent),
         useMaterial3: true,
       ),
-      home: const MusicMateView(title: 'Music Mate Home Page'),
+      home: const MusicMateView(),
     );
   }
 }
 
-class MusicMateView extends StatefulWidget {
-  const MusicMateView({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MusicMateView> createState() => _MusicMateViewState();
-}
-
-class _MusicMateViewState extends State<MusicMateView> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+class MusicMateView extends StatelessWidget {
+  const MusicMateView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
+    return const Scaffold(
+      drawer: CDrawer(),
+      appBar: CAppBar(title: 'Music Mate'),
+      body: Placeholder(),
     );
   }
 }

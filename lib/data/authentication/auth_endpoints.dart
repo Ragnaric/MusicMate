@@ -1,6 +1,4 @@
 class AuthEndpoints {
-  AuthEndpoints._();
-
   // Mock authentication endpoints for the time being.
   // Might not need if using firebase.
   static String baseUrl = 'base url';
