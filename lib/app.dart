@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:music_mate/utils/utils.dart';
 
 import 'home/home.dart';
 
@@ -9,9 +10,9 @@ class MusicMate extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Music Mate',
-      theme: ThemeData(
-        useMaterial3: true,
-      ),
+      themeMode: ThemeMode.system,
+      theme: TAppTheme.lightTheme,
+      darkTheme: TAppTheme.darkTheme,
       home: const MusicMateView(),
     );
   }
