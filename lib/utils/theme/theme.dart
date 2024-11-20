@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:music_mate/utils/theme/tailored_themes/elevated_button_theme.dart';
 import 'package:music_mate/utils/theme/tailored_themes/text_theme.dart';
 
 class TAppTheme {
@@ -11,6 +12,7 @@ class TAppTheme {
     primaryColor: Colors.greenAccent,
     scaffoldBackgroundColor: Colors.white,
     textTheme: TTextTheme.lightTextTheme,
+    elevatedButtonTheme: TElevatedButtonTheme.lightElevatedButtonTheme,
   );
 
   static ThemeData darkTheme = ThemeData(
@@ -20,5 +22,6 @@ class TAppTheme {
     primaryColor: Colors.greenAccent,
     scaffoldBackgroundColor: Colors.white,
     textTheme: TTextTheme.darkTextTheme,
+    elevatedButtonTheme: TElevatedButtonTheme.darkElevatedButtonTheme,
   );
 }
