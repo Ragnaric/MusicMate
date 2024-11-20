@@ -6,10 +6,18 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      drawer: CDrawer(),
-      appBar: CAppBar(title: 'Music Mate'),
-      body: Placeholder(),
+    return Scaffold(
+      drawer: const CDrawer(),
+      appBar: const CAppBar(title: 'Music Mate'),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          ElevatedButton(
+            onPressed: () {},
+            child: Text('Click here'),
+          ),
+        ],
+      ),
     );
   }
 }
