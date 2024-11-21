@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:music_mate/common/common.dart';
 import 'package:music_mate/metronome/metronome.dart';
 
@@ -7,16 +8,21 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: const CDrawer(),
-      appBar: const CAppBar(title: 'Music Mate'),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          MusicSystem(),
-          Center(child: ElevatedButton(onPressed: () {}, child: Text('Next beat'))),
-        ],
+    return BlocProvider(
+      create: (context) => MetronomeBloc(),
+      child: Scaffold(
+        drawer: const CDrawer(),
+        appBar: const CAppBar(title: 'Music Mate'),
+        body: BlocBuilder<MetronomeBloc, MetronomeState>(
+          builder: (context, state) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const MetronomePage(),
+              ],
+            );
+          },
+        ),
       ),
     );
   }

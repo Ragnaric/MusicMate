@@ -6,7 +6,7 @@ part 'metronome_event.dart';
 part 'metronome_state.dart';
 
 class MetronomeBloc extends Bloc<MetronomeEvent, MetronomeState> {
-  MetronomeBloc() : super(MetronomeInitial()) {
+  MetronomeBloc() : super(const MetronomeInitial()) {
     on<MetronomeEvent>((event, emit) {
       // TODO: implement event handler
     });

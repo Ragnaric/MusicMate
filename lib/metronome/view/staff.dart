@@ -1,25 +1,19 @@
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:music_mate/utils/utils.dart';
-
-class MusicSystem extends StatelessWidget {
-  const MusicSystem({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const StaffWidget();
-  }
-}
+import 'package:music_mate/metronome/metronome.dart';
 
 class StaffWidget extends StatelessWidget {
-  const StaffWidget({super.key});
+  final String clef;
+  final String timeSignature;
 
-  Future<ui.Image> _loadClefImage() async {
-    final ByteData data = await rootBundle.load(CImages.trebleClef);
-    final List<int> bytes = data.buffer.asUint8List();
-    return decodeImageFromList(Uint8List.fromList(bytes));
-  }
+  const StaffWidget({
+    super.key,
+    required this.clef,
+    required this.timeSignature,
+  });
 
   Future<List<ui.Image>> _loadImages() async {
     final List<String> imagePaths = [
@@ -48,7 +42,7 @@ class StaffWidget extends StatelessWidget {
         } else {
           return CustomPaint(
             size: Size(400, 200),
-            painter: StaffPainter(images: snapshot.data!),
+            painter: StaffPainter(images: snapshot.data!, timeSignature: timeSignature),
           );
         }
       },
@@ -57,9 +51,13 @@ class StaffWidget extends StatelessWidget {
 }
 
 class StaffPainter extends CustomPainter {
+  final String timeSignature;
   final List<ui.Image> images;
 
-  StaffPainter({required this.images});
+  StaffPainter({
+    required this.images,
+    required this.timeSignature,
+  });
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -67,7 +65,7 @@ class StaffPainter extends CustomPainter {
       ..color = Colors.black
       ..strokeWidth = 2;
 
-    double startX = 25;
+    double startX = 0;
     double endX = size.width;
     double lineSpacing = 20;
     for (int i = 0; i < 5; i++) {
@@ -78,38 +76,38 @@ class StaffPainter extends CustomPainter {
       );
     }
 
-    for (int i = 0; i < images.length; i++) {
-      if (i == 0) {
-        paintImage(
-          canvas: canvas,
-          rect: Rect.fromLTWH(0, 0, 100, 130),
-          image: images[i],
-          fit: BoxFit.contain,
-        );
-      } else {
-        paintImage(
-          canvas: canvas,
-          rect: Rect.fromLTWH(
-            10 + (i * 100),
-            10,
-            60,
-            100,
-          ),
-          image: images[i],
-          fit: BoxFit.contain,
-        );
-      }
-    }
+    // for (int i = 0; i < images.length; i++) {
+    //   if (i == 0) {
+    //     paintImage(
+    //       canvas: canvas,
+    //       rect: Rect.fromLTWH(-10, -10, 100, 150),
+    //       image: images[i],
+    //       fit: BoxFit.contain,
+    //     );
+    //   } else {
+    //     paintImage(
+    //       canvas: canvas,
+    //       rect: Rect.fromLTWH(
+    //         (i * 100),
+    //         0,
+    //         60,
+    //         100,
+    //       ),
+    //       image: images[i],
+    //       fit: BoxFit.contain,
+    //     );
+    //   }
+    // }
 
     final timeSignatureText = TextPainter(
-      text: const TextSpan(
-        text: '3\n4',
+      text: TextSpan(
+        text: timeSignature.replaceAll('/', '\n'),
         style: TextStyle(fontSize: 40, color: Colors.black, fontFamily: 'Bravura'),
       ),
       textDirection: TextDirection.ltr,
     );
     timeSignatureText.layout();
-    timeSignatureText.paint(canvas, Offset(80, 10));
+    timeSignatureText.paint(canvas, Offset(70, 10));
   }
 
   @override
