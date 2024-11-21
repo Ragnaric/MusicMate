@@ -21,19 +21,34 @@ class StaffWidget extends StatelessWidget {
     return decodeImageFromList(Uint8List.fromList(bytes));
   }
 
+  Future<List<ui.Image>> _loadImages() async {
+    final List<String> imagePaths = [
+      CImages.trebleClef,
+      CImages.quarterNote,
+      CImages.quarterNote,
+      CImages.quarterNote,
+    ];
+
+    return Future.wait(imagePaths.map((path) async {
+      final ByteData data = await rootBundle.load(path);
+      final List<int> bytes = data.buffer.asUint8List();
+      return decodeImageFromList(Uint8List.fromList(bytes));
+    }));
+  }
+
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<ui.Image>(
-      future: _loadClefImage(),
+    return FutureBuilder<List<ui.Image>>(
+      future: _loadImages(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
-          return const Center(child: Text('Failed to load clef image'));
+          return const Center(child: Text('Failed to load images'));
         } else {
           return CustomPaint(
             size: Size(400, 200),
-            painter: StaffPainter(clefImage: snapshot.data!),
+            painter: StaffPainter(images: snapshot.data!),
           );
         }
       },
@@ -42,9 +57,9 @@ class StaffWidget extends StatelessWidget {
 }
 
 class StaffPainter extends CustomPainter {
-  final ui.Image clefImage;
+  final List<ui.Image> images;
 
-  StaffPainter({required this.clefImage});
+  StaffPainter({required this.images});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -63,12 +78,28 @@ class StaffPainter extends CustomPainter {
       );
     }
 
-    paintImage(
-      canvas: canvas,
-      rect: Rect.fromLTWH(0, 0, 100, 130),
-      image: clefImage,
-      fit: BoxFit.contain,
-    );
+    for (int i = 0; i < images.length; i++) {
+      if (i == 0) {
+        paintImage(
+          canvas: canvas,
+          rect: Rect.fromLTWH(0, 0, 100, 130),
+          image: images[i],
+          fit: BoxFit.contain,
+        );
+      } else {
+        paintImage(
+          canvas: canvas,
+          rect: Rect.fromLTWH(
+            10 + (i * 100),
+            10,
+            60,
+            100,
+          ),
+          image: images[i],
+          fit: BoxFit.contain,
+        );
+      }
+    }
 
     final timeSignatureText = TextPainter(
       text: const TextSpan(

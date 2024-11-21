@@ -12,8 +12,10 @@ class HomePage extends StatelessWidget {
       appBar: const CAppBar(title: 'Music Mate'),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           MusicSystem(),
+          Center(child: ElevatedButton(onPressed: () {}, child: Text('Next beat'))),
         ],
       ),
     );
