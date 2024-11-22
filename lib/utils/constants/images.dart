@@ -5,6 +5,7 @@ class CImages {
   static const String staff = 'assets/images/staff.png';
   static const String quarterNote = 'assets/images/quarter_note.png';
   static const String trebleClef = 'assets/images/g_clef.webp';
+  static const String bassClef = 'assets/images/f_clef.png';
 
   // logos
 

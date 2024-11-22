@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:music_mate/metronome/view/clef.dart';
 import 'package:music_mate/utils/utils.dart';
 
 import '../metronome.dart';
@@ -13,8 +14,6 @@ class MetronomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = context.read<MetronomeBloc>();
-    final state = bloc.state;
     final Size canvas = Size(
       ScreenUtils.screenWidth(context) - 20,
       200
@@ -22,13 +21,20 @@ class MetronomePage extends StatelessWidget {
 
     return BlocBuilder<MetronomeBloc, MetronomeState>(
       builder: (context, state) {
+        final bloc = context.read<MetronomeBloc>();
         return Center(
           child: Column(
             children: [
               Stack(
                 children: [
                   StaffWidget(canvasSize: canvas),
-                  TimeSignature(canvasSize: canvas),
+                  TimeSignature(
+                    canvasSize: canvas,
+                    timeSignature: state.timeSignature,
+                  ),
+                  ClefWidget(
+                    canvasSize: canvas,
+                  ),
                 ],
               ),
               ElevatedButton(

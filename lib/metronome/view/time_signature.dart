@@ -2,26 +2,32 @@ import 'package:flutter/material.dart';
 
 class TimeSignature extends StatelessWidget {
   final Size canvasSize;
+  final String timeSignature;
   const TimeSignature({
     super.key,
     required this.canvasSize,
+    required this.timeSignature,
   });
 
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
       size: canvasSize,
-      painter: SignaturePainter(),
+      painter: SignaturePainter(timeSignature: timeSignature),
     );
   }
 }
 
 class SignaturePainter extends CustomPainter {
+  final String timeSignature;
+
+  SignaturePainter({required this.timeSignature});
+  
   @override
   void paint(Canvas canvas, Size size) {
     final timeSignatureText = TextPainter(
       text: TextSpan(
-        text: '3\n4',
+        text: timeSignature.replaceAll('/', '\n'),
         style: TextStyle(
           color: Colors.black,
           fontSize: 40,
