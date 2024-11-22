@@ -13,15 +13,11 @@ class HomePage extends StatelessWidget {
       child: Scaffold(
         drawer: const CDrawer(),
         appBar: const CAppBar(title: 'Music Mate'),
-        body: BlocBuilder<MetronomeBloc, MetronomeState>(
-          builder: (context, state) {
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const MetronomePage(),
-              ],
-            );
-          },
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const MetronomePage(),
+          ],
         ),
       ),
     );

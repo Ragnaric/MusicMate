@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:music_mate/utils/utils.dart';
 
 import '../metronome.dart';
 
@@ -12,23 +13,45 @@ class MetronomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final metronomeState = context.read<MetronomeBloc>().state as MetronomeInitial;
+    final bloc = context.read<MetronomeBloc>();
+    final state = bloc.state;
+    final Size canvas = Size(
+      ScreenUtils.screenWidth(context) - 20,
+      200
+    );
 
-    return Center(
-      child: Column(
-        children: [
-          StaffWidget(clef: metronomeState.clef, timeSignature: metronomeState.timeSignature),
-          ElevatedButton(
-              onPressed: () {}, child: Text('Current tempo: ${metronomeState.tempo}')
+    return BlocBuilder<MetronomeBloc, MetronomeState>(
+      builder: (context, state) {
+        return Center(
+          child: Column(
+            children: [
+              Stack(
+                children: [
+                  StaffWidget(canvasSize: canvas),
+                  TimeSignature(canvasSize: canvas),
+                ],
+              ),
+              ElevatedButton(
+                  onPressed: () {
+                    final tempo = state.tempo == 120 ? 60 : 120;
+                    bloc.add(TempoChanged(tempo: tempo));
+                  },
+                  child: Text('Current tempo: ${state.tempo}')
+              ),
+              ElevatedButton(
+                  onPressed: () {}, child: Text('Next beat')
+              ),
+              ElevatedButton(
+                  onPressed: () {
+                    final signature = state.timeSignature == '4/4' ? '3/4' : '4/4';
+                    bloc.add(TimeSignatureChanged(timeSignature: signature));
+                  },
+                  child: Text('Change time signature'),
+              ),
+            ],
           ),
-          ElevatedButton(
-              onPressed: () {}, child: Text('Next beat')
-          ),
-          ElevatedButton(
-              onPressed: () {}, child: Text('Change time signature')
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
