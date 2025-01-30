@@ -22,6 +22,10 @@ class MetronomePage extends StatelessWidget {
     return BlocBuilder<MetronomeBloc, MetronomeState>(
       builder: (context, state) {
         final bloc = context.read<MetronomeBloc>();
+        final signatureWithoutFraction = state.timeSignature.replaceAll('/', '');
+        final numerator = int.parse(signatureWithoutFraction.substring(0,1));
+        final denominator = int.parse(signatureWithoutFraction.substring(1));
+
         return Center(
           child: Column(
             children: [
@@ -35,7 +39,11 @@ class MetronomePage extends StatelessWidget {
                   ClefWidget(
                     clef: state.clef,
                   ),
-                  NotesWidget(),
+                  NotesWidget(
+                    number: numerator,
+                    type: denominator,
+                    beat: state.beat,
+                  ),
                 ],
               ),
               ElevatedButton(
@@ -61,8 +69,6 @@ class MetronomePage extends StatelessWidget {
               ),
               ElevatedButton(
                   onPressed: () {
-                    final signatureWithoutFraction = state.timeSignature.replaceAll('/', '');
-                    final numerator = int.parse(signatureWithoutFraction.substring(0,1));
                     final currentBeat = state.beat;
                     bloc.add(NextBeat(beat: currentBeat == numerator ? 1 : currentBeat + 1));
                   },
