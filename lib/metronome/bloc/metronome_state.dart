@@ -13,28 +13,33 @@ sealed class MetronomeState extends Equatable {
   final int tempo;
   final String clef;
   final String timeSignature;
+  final int beat;
 
   const MetronomeState({
     required this.tempo,
     required this.clef,
     required this.timeSignature,
+    required this.beat,
   });
 
   MetronomeState copyWith({
     int? tempo,
     String? clef,
     String? timeSignature,
+    int? beat,
   }) {
     return switch (this) {
       MetronomeInitial() => MetronomeInitial(
         tempo: tempo ?? this.tempo,
         timeSignature: timeSignature ?? this.timeSignature,
         clef: clef ?? this.clef,
+        beat: beat ?? this.beat,
       ),
       _ => MetronomeInitial(
         tempo: tempo ?? this.tempo,
         timeSignature: timeSignature ?? this.timeSignature,
         clef: clef ?? this.clef,
+        beat: beat ?? this.beat,
       )
     };
   }
@@ -54,7 +59,7 @@ sealed class MetronomeState extends Equatable {
   }
 
   @override
-  List<Object> get props => [tempo, timeSignature, clef];
+  List<Object> get props => [tempo, timeSignature, clef, beat];
 }
 
 final class MetronomeInitial extends MetronomeState {
@@ -62,6 +67,7 @@ final class MetronomeInitial extends MetronomeState {
     super.tempo = 120,
     super.timeSignature = '4/4',
     super.clef = 'treble',
+    super.beat = 1,
   });
 }
 
@@ -74,6 +80,7 @@ final class MetronomePlaying extends MetronomeState {
     required super.tempo,
     required super.clef,
     required super.timeSignature,
+    required super.beat,
     this.notes,
   });
 
@@ -87,6 +94,7 @@ final class MetronomePaused extends MetronomeState {
     required super.tempo,
     required super.clef,
     required super.timeSignature,
+    required super.beat,
   });
 }
 
@@ -97,6 +105,7 @@ final class MetronomeError extends MetronomeState {
     required super.tempo,
     required super.timeSignature,
     required super.clef,
+    required super.beat,
     required this.errorMessage,
   });
 

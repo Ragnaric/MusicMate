@@ -13,6 +13,7 @@ class MetronomeBloc extends Bloc<MetronomeEvent, MetronomeState> {
     on<TempoChanged>(_changeTempo);
     on<TimeSignatureChanged>(_changeTimeSignature);
     on<ClefChanged>(_changeClef);
+    on<NextBeat>(_goToNextBeat);
   }
 
   void _changeTempo(TempoChanged event, Emitter<MetronomeState> emit) {
@@ -25,5 +26,9 @@ class MetronomeBloc extends Bloc<MetronomeEvent, MetronomeState> {
 
   void _changeClef(ClefChanged event, Emitter<MetronomeState> emit) {
     emit(state.copyWith(clef: event.clef));
+  }
+
+  void _goToNextBeat(NextBeat event, Emitter<MetronomeState> emit) {
+    emit(state.copyWith(beat: event.beat));
   }
 }

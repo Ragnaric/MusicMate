@@ -59,6 +59,15 @@ class MetronomePage extends StatelessWidget {
                   },
                   child: Text('Change time signature'),
               ),
+              ElevatedButton(
+                  onPressed: () {
+                    final signatureWithoutFraction = state.timeSignature.replaceAll('/', '');
+                    final numerator = int.parse(signatureWithoutFraction.substring(0,1));
+                    final currentBeat = state.beat;
+                    bloc.add(NextBeat(beat: currentBeat == numerator ? 1 : currentBeat + 1));
+                  },
+                  child: Text('${state.beat}'),
+              ),
             ],
           ),
         );

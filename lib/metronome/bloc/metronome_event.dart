@@ -33,3 +33,9 @@ final class ClefChanged extends MetronomeEvent {
 
   const ClefChanged({required this.clef});
 }
+
+final class NextBeat extends MetronomeEvent {
+  final int beat;
+
+  const NextBeat({required this.beat});
+}
