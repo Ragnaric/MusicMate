@@ -27,3 +27,9 @@ final class TimeSignatureChanged extends MetronomeEvent {
 
   const TimeSignatureChanged({required this.timeSignature});
 }
+
+final class ClefChanged extends MetronomeEvent {
+  final String clef;
+
+  const ClefChanged({required this.clef});
+}

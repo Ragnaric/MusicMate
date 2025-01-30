@@ -31,14 +31,14 @@ class SignaturePainter extends CustomPainter {
         style: TextStyle(
           color: Colors.black,
           fontSize: 40,
-          fontFamily: 'Bravura',
+          fontFamily: 'Times New Roman',
           fontWeight: FontWeight.bold
         )
       ),
       textDirection: TextDirection.ltr
     );
     timeSignatureText.layout();
-    timeSignatureText.paint(canvas, Offset(70, 10));
+    timeSignatureText.paint(canvas, const Offset(70, 10));
   }
 
   @override
