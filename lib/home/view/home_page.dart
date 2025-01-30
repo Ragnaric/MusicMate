@@ -11,12 +11,12 @@ class HomePage extends StatelessWidget {
     return BlocProvider(
       create: (context) => MetronomeBloc(),
       child: Scaffold(
-        drawer: const CDrawer(),
-        appBar: const CAppBar(title: 'Music Mate'),
+        drawer: CDrawer(),
+        appBar: CAppBar(title: 'Music Mate'),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const MetronomePage(),
+            MetronomePage(),
           ],
         ),
       ),

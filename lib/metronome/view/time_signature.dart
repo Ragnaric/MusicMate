@@ -28,7 +28,7 @@ class SignaturePainter extends CustomPainter {
     final timeSignatureText = TextPainter(
       text: TextSpan(
         text: timeSignature.replaceAll('/', '\n'),
-        style: TextStyle(
+        style: const TextStyle(
           color: Colors.black,
           fontSize: 40,
           fontFamily: 'Times New Roman',

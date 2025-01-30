@@ -15,7 +15,7 @@ class ClefWidget extends StatelessWidget {
     return Image.asset(
       clef == 'treble' ? CImages.trebleClef : CImages.bassClef,
       height: clef == 'treble' ? 130 : 100,
-      width: clef == 'treble' ? 90 : 60,
+      width: clef == 'treble' ? 80 : 60,
     );
   }
 }

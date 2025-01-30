@@ -35,6 +35,7 @@ class MetronomePage extends StatelessWidget {
                   ClefWidget(
                     clef: state.clef,
                   ),
+                  NotesWidget(),
                 ],
               ),
               ElevatedButton(
