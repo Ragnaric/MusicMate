@@ -35,6 +35,26 @@ sealed class MetronomeState extends Equatable {
         clef: clef ?? this.clef,
         beat: beat ?? this.beat,
       ),
+      MetronomePlaying() => MetronomePlaying(
+        tempo: tempo ?? this.tempo,
+        timeSignature: timeSignature ?? this.timeSignature,
+        clef: clef ?? this.clef,
+        beat: beat ?? this.beat,
+      ),
+      MetronomePaused() => MetronomePaused(
+        tempo: tempo ?? this.tempo,
+        timeSignature: timeSignature ?? this.timeSignature,
+        clef: clef ?? this.clef,
+        beat: beat ?? this.beat,
+      ),
+      MetronomeError() => MetronomeError(
+        tempo: tempo ?? this.tempo,
+        timeSignature: timeSignature ?? this.timeSignature,
+        clef: clef ?? this.clef,
+        beat: beat ?? this.beat,
+        errorMessage: (this as MetronomeError).errorMessage,
+      ),
+      //The following case is for any states that are not covered in the previous cases
       _ => MetronomeInitial(
         tempo: tempo ?? this.tempo,
         timeSignature: timeSignature ?? this.timeSignature,
@@ -74,14 +94,11 @@ final class MetronomeInitial extends MetronomeState {
 final class MetronomePlaying extends MetronomeState {
   // this state will have the total number of notes be equal to the numerator of
   // of the time signature and the type of note equal to the denominator
-  final List<dynamic>? notes;
-
   const MetronomePlaying({
     required super.tempo,
     required super.clef,
     required super.timeSignature,
     required super.beat,
-    this.notes,
   });
 
   @override

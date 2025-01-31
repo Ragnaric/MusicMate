@@ -4,17 +4,9 @@ sealed class MetronomeEvent {
   const MetronomeEvent();
 }
 
-final class MetronomeStopped extends MetronomeEvent {
-  const MetronomeStopped();
-}
+final class MetronomeStarted extends MetronomeEvent {}
 
-final class MetronomeResumed extends MetronomeEvent {
-  const MetronomeResumed();
-}
-
-final class MetronomeRestarted extends MetronomeEvent {
-  const MetronomeRestarted();
-}
+final class MetronomeStopped extends MetronomeEvent {}
 
 final class TempoChanged extends MetronomeEvent {
   final int tempo;
@@ -34,8 +26,4 @@ final class ClefChanged extends MetronomeEvent {
   const ClefChanged({required this.clef});
 }
 
-final class NextBeat extends MetronomeEvent {
-  final int beat;
-
-  const NextBeat({required this.beat});
-}
+final class NextBeat extends MetronomeEvent {}
