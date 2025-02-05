@@ -50,7 +50,6 @@ class MetronomeBloc extends Bloc<MetronomeEvent, MetronomeState> {
         timeSignature: state.timeSignature,
         beat: 1,
       ));
-      _playSound();
       _startTimer(emit);
     }
   }
@@ -67,6 +66,7 @@ class MetronomeBloc extends Bloc<MetronomeEvent, MetronomeState> {
 
   void _startTimer(Emitter<MetronomeState> emit) {
     _timer?.cancel();
+    _playSound();
     final interval = Duration(milliseconds: (60000 / state.tempo).round());
     _timer = Timer.periodic(interval, (_) {
       _playSound();
@@ -80,6 +80,10 @@ class MetronomeBloc extends Bloc<MetronomeEvent, MetronomeState> {
   }
 
   Future<void> _playSound() async {
+    // the addition of a tenth of the playback rate is to account for the extra duration of the audio file
+    // since it is not exactly 1 second
+    final playbackRate = state.tempo / 60;
+    _audioPlayer.setPlaybackRate(playbackRate + playbackRate * .1);
     await _audioPlayer.play(AssetSource(CSounds.tick));
   }
 
