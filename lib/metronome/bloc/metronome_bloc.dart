@@ -3,11 +3,13 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/services.dart';
 import 'package:music_mate/utils/utils.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 part 'metronome_event.dart';
 part 'metronome_state.dart';
 
 class MetronomeBloc extends Bloc<MetronomeEvent, MetronomeState> {
+  final AudioPlayer _audioPlayer = AudioPlayer();
   Timer? _timer;
 
   MetronomeBloc() : super(const MetronomeInitial()) {
@@ -48,6 +50,7 @@ class MetronomeBloc extends Bloc<MetronomeEvent, MetronomeState> {
         timeSignature: state.timeSignature,
         beat: 1,
       ));
+      _playSound();
       _startTimer(emit);
     }
   }
@@ -66,6 +69,7 @@ class MetronomeBloc extends Bloc<MetronomeEvent, MetronomeState> {
     _timer?.cancel();
     final interval = Duration(milliseconds: (60000 / state.tempo).round());
     _timer = Timer.periodic(interval, (_) {
+      _playSound();
       add(NextBeat());
     });
   }
@@ -73,5 +77,16 @@ class MetronomeBloc extends Bloc<MetronomeEvent, MetronomeState> {
   void _restartTimer(Emitter<MetronomeState> emit) {
     _timer?.cancel();
     _startTimer(emit);
+  }
+
+  Future<void> _playSound() async {
+    await _audioPlayer.play(AssetSource(CSounds.tick));
+  }
+
+  @override
+  Future<void> close() {
+    _timer?.cancel();
+    _audioPlayer.dispose();
+    return super.close();
   }
 }

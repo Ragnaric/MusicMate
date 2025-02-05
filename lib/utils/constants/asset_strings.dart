@@ -15,5 +15,5 @@ class CImages {
 
 class CSounds {
   // sounds
-  static const String tick = 'assets/sounds/metronome_tick.mp3';
+  static const String tick = 'sounds/metronome_tick.mp3';
 }

@@ -75,7 +75,7 @@ class MetronomePage extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () => bloc.add(MetronomeStarted()),
-                child: Text('Start'),
+                child: Text('Play'),
               ),
               ElevatedButton(
                 onPressed: () => bloc.add(MetronomeStopped()),
