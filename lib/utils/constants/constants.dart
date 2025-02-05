@@ -1,3 +1,3 @@
 export 'colors.dart';
-export 'images.dart';
+export 'asset_strings.dart';
 export 'sizes.dart';

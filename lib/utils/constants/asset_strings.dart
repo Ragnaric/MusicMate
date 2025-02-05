@@ -12,3 +12,8 @@ class CImages {
   // icons
 
 }
+
+class CSounds {
+  // sounds
+  static const String tick = 'assets/sounds/metronome_tick.mp3';
+}
