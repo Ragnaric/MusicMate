@@ -23,6 +23,7 @@ class MetronomeBloc extends Bloc<MetronomeEvent, MetronomeState> {
 
   void _changeTempo(TempoChanged event, Emitter<MetronomeState> emit) {
     emit(state.copyWith(tempo: event.tempo));
+    _restartTimer(emit);
   }
 
   void _changeTimeSignature(TimeSignatureChanged event, Emitter<MetronomeState> emit) {
