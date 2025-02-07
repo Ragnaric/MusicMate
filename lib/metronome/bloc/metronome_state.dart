@@ -92,8 +92,6 @@ final class MetronomeInitial extends MetronomeState {
 }
 
 final class MetronomePlaying extends MetronomeState {
-  // this state will have the total number of notes be equal to the numerator of
-  // of the time signature and the type of note equal to the denominator
   const MetronomePlaying({
     required super.tempo,
     required super.clef,
@@ -106,13 +104,15 @@ final class MetronomePlaying extends MetronomeState {
 }
 
 final class MetronomePaused extends MetronomeState {
-  // this state will also have the remaining time for the current beat
   const MetronomePaused({
     required super.tempo,
     required super.clef,
     required super.timeSignature,
     required super.beat,
   });
+
+  @override
+  List<Object> get props => [...super.props];
 }
 
 final class MetronomeError extends MetronomeState {

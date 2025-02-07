@@ -69,7 +69,6 @@ class MetronomePage extends StatelessWidget {
               ),
               ElevatedButton(
                   onPressed: () {
-                    final currentBeat = state.beat;
                     bloc.add(NextBeat());
                   },
                   child: Text('${state.beat}'),
