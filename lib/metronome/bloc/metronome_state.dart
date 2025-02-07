@@ -87,7 +87,7 @@ final class MetronomeInitial extends MetronomeState {
     super.tempo = 120,
     super.timeSignature = '4/4',
     super.clef = 'treble',
-    super.beat = 1,
+    super.beat = 0,
   });
 }
 

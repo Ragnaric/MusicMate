@@ -52,6 +52,7 @@ class MetronomePage extends StatelessWidget {
                   },
                   child: Text('Current tempo: ${state.tempo}')
               ),
+
               ElevatedButton(
                   onPressed: () {
                     final clef = state.clef == 'treble' ? 'bass' : 'treble';

@@ -13,6 +13,10 @@ class MetronomeBloc extends Bloc<MetronomeEvent, MetronomeState> {
   Timer? _timer;
 
   MetronomeBloc() : super(const MetronomeInitial()) {
+    _audioPlayer
+      ..setReleaseMode(ReleaseMode.stop)
+      ..setSource(AssetSource(CSounds.tick))
+      ..audioCache;
     on<TempoChanged>(_changeTempo);
     on<TimeSignatureChanged>(_changeTimeSignature);
     on<ClefChanged>(_changeClef);
@@ -23,7 +27,9 @@ class MetronomeBloc extends Bloc<MetronomeEvent, MetronomeState> {
 
   void _changeTempo(TempoChanged event, Emitter<MetronomeState> emit) {
     emit(state.copyWith(tempo: event.tempo));
-    _restartTimer(emit);
+    if (state is MetronomePlaying) {
+      _restartTimer(emit);
+    }
   }
 
   void _changeTimeSignature(TimeSignatureChanged event, Emitter<MetronomeState> emit) {
@@ -68,7 +74,7 @@ class MetronomeBloc extends Bloc<MetronomeEvent, MetronomeState> {
   void _startTimer(Emitter<MetronomeState> emit) {
     _timer?.cancel();
     _playSound();
-    final interval = Duration(milliseconds: (60000 / state.tempo).round());
+    final interval = Duration(milliseconds: 60000 ~/ state.tempo);
     _timer = Timer.periodic(interval, (_) {
       _playSound();
       add(NextBeat());
@@ -85,7 +91,8 @@ class MetronomeBloc extends Bloc<MetronomeEvent, MetronomeState> {
     // since it is not exactly 1 second
     final playbackRate = state.tempo / 60;
     _audioPlayer.setPlaybackRate(playbackRate + playbackRate * .1);
-    await _audioPlayer.play(AssetSource(CSounds.tick));
+    _audioPlayer.resume();
+    //SystemSound.play(SystemSoundType.click);
   }
 
   @override
