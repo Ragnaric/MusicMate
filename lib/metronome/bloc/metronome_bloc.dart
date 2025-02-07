@@ -15,7 +15,7 @@ class MetronomeBloc extends Bloc<MetronomeEvent, MetronomeState> {
   MetronomeBloc() : super(const MetronomeInitial()) {
     _audioPlayer
       ..setReleaseMode(ReleaseMode.stop)
-      ..setSource(AssetSource(CSounds.tick))
+      ..setSource(AssetSource(CSounds.sound))
       ..audioCache;
     on<TempoChanged>(_changeTempo);
     on<TimeSignatureChanged>(_changeTimeSignature);
@@ -47,6 +47,7 @@ class MetronomeBloc extends Bloc<MetronomeEvent, MetronomeState> {
     final numerator = int.parse(state.timeSignature.split('/')[0]);
     final nextBeat = (state.beat % numerator) + 1;
     emit(state.copyWith(beat: nextBeat));
+    _playSound();
   }
 
   void _startMetronome(MetronomeStarted event, Emitter<MetronomeState> emit) {
@@ -76,7 +77,6 @@ class MetronomeBloc extends Bloc<MetronomeEvent, MetronomeState> {
     _playSound();
     final interval = Duration(milliseconds: 60000 ~/ state.tempo);
     _timer = Timer.periodic(interval, (_) {
-      _playSound();
       add(NextBeat());
     });
   }
@@ -87,12 +87,9 @@ class MetronomeBloc extends Bloc<MetronomeEvent, MetronomeState> {
   }
 
   Future<void> _playSound() async {
-    // the addition of a tenth of the playback rate is to account for the extra duration of the audio file
-    // since it is not exactly 1 second
     final playbackRate = state.tempo / 60;
-    _audioPlayer.setPlaybackRate(playbackRate + playbackRate * .1);
+    _audioPlayer.setPlaybackRate(playbackRate);
     _audioPlayer.resume();
-    //SystemSound.play(SystemSoundType.click);
   }
 
   @override
